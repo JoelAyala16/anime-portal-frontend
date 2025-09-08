@@ -1,9 +1,8 @@
+// frontend/src/api.js
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL || "https://anime-portal-backend.onrender.com";
-
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: "https://anime-portal-backend.onrender.com/api", // ✅ tu backend en Render
 });
 
 export default api;
