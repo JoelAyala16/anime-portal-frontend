@@ -3,16 +3,23 @@ import React, { useEffect } from "react";
 function GalleryModal({ isOpen, onClose, imageUrl }) {
   if (!isOpen) return null;
 
-  // Cerrar con la tecla Esc
+  // Cerrar con tecla Esc
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    // Bloquear scroll del body
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
   }, [onClose]);
 
-  // Cerrar haciendo clic en el fondo
+  // Cerrar al hacer clic en el fondo
   const handleBackdropClick = (e) => {
     if (e.target.id === "modal-backdrop") {
       onClose();
@@ -22,18 +29,25 @@ function GalleryModal({ isOpen, onClose, imageUrl }) {
   return (
     <div
       id="modal-backdrop"
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 
+                 transition-opacity duration-300"
       onClick={handleBackdropClick}
     >
-      <div className="relative">
+      <div className="relative animate-fadeIn">
         <img
           src={imageUrl}
-          alt="Preview"
-          className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg"
+          alt="Vista ampliada"
+          className="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg border border-gray-300"
         />
+
+        {/* Botón de cierre */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded"
+          className="absolute top-3 right-3 bg-red-600 hover:bg-red-700 text-white 
+                     w-8 h-8 flex items-center justify-center rounded-full shadow-md"
+          aria-label="Cerrar"
         >
           ✕
         </button>

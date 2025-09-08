@@ -8,10 +8,11 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', system-ui, sans-serif;
-  @apply bg-white text-gray-900 transition-colors duration-300;
+  @apply bg-white text-gray-900 transition-colors duration-300 ease-in-out;
 }
 
-.dark body {
+/* Modo oscuro aplicado al root */
+.dark {
   @apply bg-gray-900 text-gray-100;
 }
 
@@ -19,5 +20,5 @@ a {
   @apply text-blue-600 hover:underline;
 }
 .dark a {
-  @apply text-blue-400;
+  @apply text-blue-400 hover:text-blue-300;
 }

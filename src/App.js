@@ -12,12 +12,15 @@ import Chatbot from "./components/Chatbot"; // 👈 Importamos el chatbot
 function App() {
   return (
     <Router>
-      <div className="p-4">
+      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
         {/* Navbar */}
-        <nav className="flex items-center justify-between px-6 py-4 bg-primary dark:bg-gray-800 shadow-md">
-          <h1 className="text-xl font-bold text-white">Anime Portal</h1>
+        <nav className="flex items-center justify-between px-6 py-4 bg-blue-600 dark:bg-gray-800 shadow-md">
+          <h1 className="text-lg sm:text-xl font-bold text-white">
+            Anime Portal
+          </h1>
 
-          <div className="flex gap-4">
+          {/* Links */}
+          <div className="flex gap-3 overflow-x-auto text-sm sm:text-base">
             <Link to="/" className="text-white hover:underline">
               Dashboard
             </Link>
@@ -42,21 +45,22 @@ function App() {
           <ThemeSwitch />
         </nav>
 
-        {/* Rutas */}
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/animes" element={<AnimeList />} />
-          <Route path="/add-anime" element={<AnimeForm />} />
-          <Route path="/edit-anime/:id" element={<EditAnimeForm />} />
-          <Route path="/personajes" element={<PersonajeList />} />
-          <Route path="/add-personaje" element={<PersonajeForm />} />
-          <Route path="/edit-personaje/:id" element={<EditPersonajeForm />} />
-          <Route path="/chatbot" element={<Chatbot />} />
-        </Routes>
+        {/* Contenido principal */}
+        <main className="flex-1 p-4">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/animes" element={<AnimeList />} />
+            <Route path="/add-anime" element={<AnimeForm />} />
+            <Route path="/edit-anime/:id" element={<EditAnimeForm />} />
+            <Route path="/personajes" element={<PersonajeList />} />
+            <Route path="/add-personaje" element={<PersonajeForm />} />
+            <Route path="/edit-personaje/:id" element={<EditPersonajeForm />} />
+            <Route path="/chatbot" element={<Chatbot />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );
 }
 
 export default App;
-
