@@ -1,6 +1,86 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* @tailwind base; */
+/* @tailwind components; */
+/* @tailwind utilities; */
 
-:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; }
-.line-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+/* ===== Estilos globales ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    color: #1f2937; /* Tailwind text-gray-900 */
+    transition-property: background-color, color;
+    transition-duration: 300ms;
+  }
+  @media (prefers-color-scheme: dark) {
+    html, body {
+      background-color: #111827; /* Tailwind bg-gray-900 */
+      color: #f3f4f6; /* Tailwind text-gray-100 */
+    }
+}
+
+/* ===== Links ===== */
+a {
+  color: #2563eb; /* Tailwind text-blue-600 */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  a {
+    color: #60a5fa; /* Tailwind text-blue-400 */
+  }
+}
+
+/* ===== Botones ===== */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+/* ===== Inputs y formularios ===== */
+input, textarea, select {
+  border: 1px solid #d1d5db; /* Tailwind border-gray-300 */
+  border-radius: 0.375rem;    /* Tailwind rounded-md */
+  padding: 0.5rem;            /* Tailwind p-2 */
+  outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #93c5fd; /* Tailwind ring-2 ring-primary-light */
+}
+
+@media (prefers-color-scheme: dark) {
+  input, textarea, select {
+    border: 1px solid #374151; /* Tailwind dark:border-gray-700 */
+  }
+  input:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 2px #2563eb; /* Tailwind dark:focus:ring-primary-dark */
+  }
+}
+
+/* ===== Navbar ===== */
+nav a {
+  padding-left: 0.75rem;  /* px-3 */
+  padding-right: 0.75rem; /* px-3 */
+  padding-top: 0.25rem;   /* py-1 */
+  padding-bottom: 0.25rem;/* py-1 */
+  border-radius: 0.375rem;/* rounded-md */
+}
+
+nav a:hover {
+  background-color: #3b82f6; /* Tailwind bg-blue-500 */
+  color: #fff; /* Tailwind text-white */
+}
+
+/* For dark mode, you need to handle it with a selector or JS, e.g.: */
+@media (prefers-color-scheme: dark) {
+  nav a:hover {
+    background-color: #1e40af; /* Tailwind bg-blue-700 */
+    color: #fff;
+  }
+}
