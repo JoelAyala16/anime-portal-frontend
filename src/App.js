@@ -1,24 +1,37 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AnimeList from "./components/AnimeList";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AnimeForm from "./components/AnimeForm";
-import PersonajeList from "./components/PersonajeList";
+import AnimeList from "./components/AnimeList";
 import PersonajeForm from "./components/PersonajeForm";
-import Navbar from "./components/Navbar";
+import PersonajeList from "./components/PersonajeList";
+import ThemeSwitch from "./components/ThemeSwitch";
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <Navbar />
+      <div className="p-4">
+        {/* Navbar integrado */}
+        <nav className="flex items-center justify-between px-6 py-4 bg-primary dark:bg-gray-800 shadow-md">
+          <h1 className="text-xl font-bold text-white">Anime Portal</h1>
 
-        <div className="p-6">
-          <Routes>
-            <Route path="/" element={<AnimeList />} />
-            <Route path="/add-anime" element={<AnimeForm />} />
-            <Route path="/personajes" element={<PersonajeList />} />
-            <Route path="/add-personaje" element={<PersonajeForm />} />
-          </Routes>
-        </div>
+          <div className="flex gap-4">
+            <Link to="/" className="text-white hover:underline">Animes</Link>
+            <Link to="/add-anime" className="text-white hover:underline">Agregar Anime</Link>
+            <Link to="/personajes" className="text-white hover:underline">Personajes</Link>
+            <Link to="/add-personaje" className="text-white hover:underline">Agregar Personaje</Link>
+          </div>
+
+          {/* Botón de cambio de tema */}
+          <ThemeSwitch />
+        </nav>
+
+        {/* Rutas */}
+        <Routes>
+          <Route path="/" element={<AnimeList />} />
+          <Route path="/add-anime" element={<AnimeForm />} />
+          <Route path="/personajes" element={<PersonajeList />} />
+          <Route path="/add-personaje" element={<PersonajeForm />} />
+        </Routes>
       </div>
     </Router>
   );
