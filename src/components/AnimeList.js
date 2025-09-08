@@ -27,52 +27,51 @@ function AnimeList() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
         Lista de Animes
       </h2>
 
       {animes.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-300">No hay animes aún.</p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {animes.map((anime) => (
             <li
               key={anime._id}
-              className="border p-3 rounded bg-white dark:bg-gray-800 shadow-md flex items-start justify-between"
+              className="border rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden hover:scale-105 transition-transform"
             >
-              <div className="max-w-xs">
-                <p className="font-semibold text-gray-900 dark:text-white">
+              {anime.imagen && (
+                <img
+                  src={
+                    anime.imagen.startsWith("http")
+                      ? anime.imagen
+                      : `https://anime-portal-backend.onrender.com${anime.imagen}`
+                  }
+                  alt={anime.titulo}
+                  className="w-full h-60 object-cover"
+                />
+              )}
+              <div className="p-4">
+                <p className="font-semibold text-lg text-gray-900 dark:text-white">
                   {anime.titulo}
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+                <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
                   {anime.descripcion}
                 </p>
-                {anime.imagen && (
-                  <img
-                    src={
-                      anime.imagen.startsWith("http")
-                        ? anime.imagen
-                        : `https://anime-portal-backend.onrender.com${anime.imagen}`
-                    }
-                    alt={anime.titulo}
-                    className="w-32 mt-2 rounded"
-                  />
-                )}
-              </div>
-
-              <div className="space-x-2 flex-shrink-0">
-                <Link
-                  to={`/edit-anime/${anime._id}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  Editar
-                </Link>
-                <button
-                  onClick={() => handleDelete(anime._id)}
-                  className="text-red-500 hover:underline"
-                >
-                  Eliminar
-                </button>
+                <div className="flex justify-end space-x-3">
+                  <Link
+                    to={`/edit-anime/${anime._id}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Editar
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(anime._id)}
+                    className="text-red-500 hover:underline"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </li>
           ))}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 
-function PersonajesList() {
+function PersonajeList() {
   const [personajes, setPersonajes] = useState([]);
 
   useEffect(() => {
@@ -17,65 +17,66 @@ function PersonajesList() {
       try {
         await api.delete(`/personajes/${id}`);
         setPersonajes(personajes.filter((p) => p._id !== id));
-        alert("Personaje eliminado con éxito ✅");
+        alert("✅ Personaje eliminado con éxito");
       } catch (err) {
         console.error("Error eliminando personaje:", err);
-        alert("No se pudo eliminar el personaje ❌");
+        alert("❌ No se pudo eliminar el personaje");
       }
     }
   };
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+      <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
         Lista de Personajes
       </h2>
 
       {personajes.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300">No hay personajes aún.</p>
+        <p className="text-gray-600 dark:text-gray-300">
+          No hay personajes aún.
+        </p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {personajes.map((personaje) => (
             <li
               key={personaje._id}
-              className="border p-3 rounded bg-white dark:bg-gray-800 shadow-md flex items-start justify-between"
+              className="border rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden hover:scale-105 transition-transform"
             >
-              <div className="max-w-xs">
-                <p className="font-semibold text-gray-900 dark:text-white">
+              {personaje.imagen && (
+                <img
+                  src={
+                    personaje.imagen.startsWith("http")
+                      ? personaje.imagen
+                      : `https://anime-portal-backend.onrender.com${personaje.imagen}`
+                  }
+                  alt={personaje.nombre}
+                  className="w-full h-60 object-cover"
+                />
+              )}
+              <div className="p-4">
+                <p className="font-semibold text-lg text-gray-900 dark:text-white">
                   {personaje.nombre}
                 </p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">
+                <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
                   {personaje.descripcion}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
                   Anime: {personaje.anime}
                 </p>
-                {personaje.imagen && (
-                  <img
-                    src={
-                      personaje.imagen.startsWith("http")
-                        ? personaje.imagen
-                        : `https://anime-portal-backend.onrender.com${personaje.imagen}`
-                    }
-                    alt={personaje.nombre}
-                    className="w-32 mt-2 rounded"
-                  />
-                )}
-              </div>
-
-              <div className="space-x-2 flex-shrink-0">
-                <Link
-                  to={`/edit-personaje/${personaje._id}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  Editar
-                </Link>
-                <button
-                  onClick={() => handleDelete(personaje._id)}
-                  className="text-red-500 hover:underline"
-                >
-                  Eliminar
-                </button>
+                <div className="flex justify-end space-x-3">
+                  <Link
+                    to={`/edit-personaje/${personaje._id}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Editar
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(personaje._id)}
+                    className="text-red-500 hover:underline"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             </li>
           ))}
@@ -85,4 +86,4 @@ function PersonajesList() {
   );
 }
 
-export default PersonajesList;
+export default PersonajeList;
