@@ -52,7 +52,7 @@ function AnimeList() {
                     src={
                       anime.imagen.startsWith("http")
                         ? anime.imagen
-                        : `https://anime-portal-backend.onrender.com/${anime.imagen}`
+                        : `https://anime-portal-backend.onrender.com${anime.imagen}`
                     }
                     alt={anime.titulo}
                     className="w-32 mt-2 rounded"
@@ -83,3 +83,4 @@ function AnimeList() {
 }
 
 export default AnimeList;
+
