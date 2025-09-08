@@ -1,143 +1,60 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 function AnimeForm() {
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [genero, setGenero] = useState("");
-  const [rating, setRating] = useState("");
-  const [personajes, setPersonajes] = useState([""]);
-  const [imagenes, setImagenes] = useState([]);
+  const [form, setForm] = useState({ titulo: "", descripcion: "", genero: "" });
+  const [imagen, setImagen] = useState(null);
+  const navigate = useNavigate();
 
-  // manejar cambio de personajes dinámicamente
-  const handlePersonajeChange = (index, value) => {
-    const nuevos = [...personajes];
-    nuevos[index] = value;
-    setPersonajes(nuevos);
-  };
-
-  const addPersonaje = () => setPersonajes([...personajes, ""]);
-  const removePersonaje = (index) => {
-    setPersonajes(personajes.filter((_, i) => i !== index));
-  };
-
-  const handleImageChange = (e) => {
-    setImagenes([...e.target.files]);
-  };
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append("titulo", form.titulo);
+    data.append("descripcion", form.descripcion);
+    data.append("genero", form.genero);
+    if (imagen) data.append("imagen", imagen);
 
-    const formData = new FormData();
-    formData.append("titulo", titulo);
-    formData.append("descripcion", descripcion);
-    formData.append("genero", genero);
-    formData.append("rating", rating);
-
-    personajes.forEach((p, i) => {
-      formData.append(`personajes[${i}]`, p);
+    await api.post("/api/anime", data, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
-
-    imagenes.forEach((img) => {
-      formData.append("imagenes", img);
-    });
-
-    try {
-      await api.post("/api/animes", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("✅ Anime agregado con éxito");
-      setTitulo("");
-      setDescripcion("");
-      setGenero("");
-      setRating("");
-      setPersonajes([""]);
-      setImagenes([]);
-    } catch (err) {
-      console.error("❌ Error al agregar anime:", err);
-      alert("Error al guardar el anime");
-    }
+    navigate("/animes");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded space-y-3">
-      <h2 className="text-lg font-bold">Agregar Anime</h2>
-
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-4 border rounded bg-white dark:bg-gray-800"
+    >
+      <h2 className="text-xl font-bold mb-4">Agregar Anime</h2>
       <input
-        type="text"
+        name="titulo"
+        value={form.titulo}
+        onChange={handleChange}
         placeholder="Título"
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
-        className="border p-2 w-full"
-        required
+        className="w-full mb-2 p-2 border rounded"
       />
-
       <textarea
+        name="descripcion"
+        value={form.descripcion}
+        onChange={handleChange}
         placeholder="Descripción"
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        className="border p-2 w-full"
+        className="w-full mb-2 p-2 border rounded"
       />
-
       <input
-        type="text"
+        name="genero"
+        value={form.genero}
+        onChange={handleChange}
         placeholder="Género"
-        value={genero}
-        onChange={(e) => setGenero(e.target.value)}
-        className="border p-2 w-full"
+        className="w-full mb-2 p-2 border rounded"
       />
-
-      <input
-        type="number"
-        placeholder="Rating"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        className="border p-2 w-full"
-      />
-
-      <div>
-        <h3 className="font-semibold">Personajes</h3>
-        {personajes.map((p, i) => (
-          <div key={i} className="flex gap-2 mb-2">
-            <input
-              type="text"
-              value={p}
-              placeholder={`Personaje #${i + 1}`}
-              onChange={(e) => handlePersonajeChange(i, e.target.value)}
-              className="border p-2 flex-1"
-            />
-            <button
-              type="button"
-              onClick={() => removePersonaje(i)}
-              className="bg-red-500 text-white px-2 rounded"
-            >
-              X
-            </button>
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={addPersonaje}
-          className="bg-green-500 text-white px-3 py-1 rounded"
-        >
-          + Añadir personaje
-        </button>
-      </div>
-
-      <div>
-        <h3 className="font-semibold">Imágenes</h3>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageChange}
-          className="border p-2 w-full"
-        />
-      </div>
-
+      <input type="file" onChange={(e) => setImagen(e.target.files[0])} />
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="px-3 py-2 bg-green-600 text-white rounded mt-2"
       >
         Guardar
       </button>

@@ -4,20 +4,32 @@ import AnimeList from "./components/AnimeList";
 import PersonajeForm from "./components/PersonajeForm";
 import PersonajeList from "./components/PersonajeList";
 import ThemeSwitch from "./components/ThemeSwitch";
+import Dashboard from "./components/Dashboard"; // 👈 importamos el dashboard
 
 function App() {
   return (
     <Router>
       <div className="p-4">
-        {/* Navbar integrado */}
+        {/* Navbar */}
         <nav className="flex items-center justify-between px-6 py-4 bg-primary dark:bg-gray-800 shadow-md">
           <h1 className="text-xl font-bold text-white">Anime Portal</h1>
 
           <div className="flex gap-4">
-            <Link to="/" className="text-white hover:underline">Animes</Link>
-            <Link to="/add-anime" className="text-white hover:underline">Agregar Anime</Link>
-            <Link to="/personajes" className="text-white hover:underline">Personajes</Link>
-            <Link to="/add-personaje" className="text-white hover:underline">Agregar Personaje</Link>
+            <Link to="/" className="text-white hover:underline">
+              Dashboard
+            </Link>
+            <Link to="/animes" className="text-white hover:underline">
+              Animes
+            </Link>
+            <Link to="/add-anime" className="text-white hover:underline">
+              Agregar Anime
+            </Link>
+            <Link to="/personajes" className="text-white hover:underline">
+              Personajes
+            </Link>
+            <Link to="/add-personaje" className="text-white hover:underline">
+              Agregar Personaje
+            </Link>
           </div>
 
           {/* Botón de cambio de tema */}
@@ -26,7 +38,8 @@ function App() {
 
         {/* Rutas */}
         <Routes>
-          <Route path="/" element={<AnimeList />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/animes" element={<AnimeList />} />
           <Route path="/add-anime" element={<AnimeForm />} />
           <Route path="/personajes" element={<PersonajeList />} />
           <Route path="/add-personaje" element={<PersonajeForm />} />
