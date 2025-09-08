@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AnimeForm from "./components/AnimeForm";
 import AnimeList from "./components/AnimeList";
+import EditAnimeForm from "./components/EditAnimeForm";
 import PersonajeForm from "./components/PersonajeForm";
 import PersonajeList from "./components/PersonajeList";
+import EditPersonajeForm from "./components/EditPersonajeForm";
 import ThemeSwitch from "./components/ThemeSwitch";
-import Dashboard from "./components/Dashboard"; // 👈 importamos el dashboard
+import Dashboard from "./components/Dashboard";
+import Chatbot from "./components/Chatbot"; // 👈 Importamos el chatbot
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
             <Link to="/add-personaje" className="text-white hover:underline">
               Agregar Personaje
             </Link>
+            <Link to="/chatbot" className="text-white hover:underline">
+              Chatbot
+            </Link>
           </div>
 
           {/* Botón de cambio de tema */}
@@ -41,8 +47,11 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/animes" element={<AnimeList />} />
           <Route path="/add-anime" element={<AnimeForm />} />
+          <Route path="/edit-anime/:id" element={<EditAnimeForm />} />
           <Route path="/personajes" element={<PersonajeList />} />
           <Route path="/add-personaje" element={<PersonajeForm />} />
+          <Route path="/edit-personaje/:id" element={<EditPersonajeForm />} />
+          <Route path="/chatbot" element={<Chatbot />} />
         </Routes>
       </div>
     </Router>
@@ -50,3 +59,4 @@ function App() {
 }
 
 export default App;
+

@@ -18,9 +18,11 @@ function AnimeForm() {
     data.append("genero", form.genero);
     if (imagen) data.append("imagen", imagen);
 
-    await api.post("/api/anime", data, {
+    // ✅ corregido: plural en la ruta
+    await api.post("/animes", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+
     navigate("/animes");
   };
 

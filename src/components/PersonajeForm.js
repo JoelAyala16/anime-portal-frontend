@@ -18,10 +18,15 @@ function PersonajeForm() {
     data.append("anime", form.anime);
     if (imagen) data.append("imagen", imagen);
 
-    await api.post("/api/personajes", data, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    navigate("/personajes");
+    try {
+      await api.post("/personajes", data, {   // ✅ corregido (sin /api)
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      navigate("/personajes");
+    } catch (err) {
+      console.error("Error guardando personaje:", err);
+      alert("❌ No se pudo guardar el personaje");
+    }
   };
 
   return (
@@ -63,3 +68,4 @@ function PersonajeForm() {
 }
 
 export default PersonajeForm;
+

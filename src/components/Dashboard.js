@@ -9,8 +9,8 @@ function Dashboard() {
     const fetchStats = async () => {
       try {
         const [animesRes, personajesRes] = await Promise.all([
-          api.get("/api/anime"),
-          api.get("/api/personajes"),
+          api.get("/animes"),      // ✅ corregido (plural y sin /api)
+          api.get("/personajes"),  // ✅ igual
         ]);
         setStats({
           animes: animesRes.data.length,
