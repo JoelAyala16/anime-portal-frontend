@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import api from "../api.js";
+
 
 function EditPersonajeForm({ personajeId, onClose }) {
   const [nombre, setNombre] = useState("");

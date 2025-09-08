@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import api from "../api";
+import api from "../api.js";
+
 
 function PersonajeForm() {
   const [nombre, setNombre] = useState("");
